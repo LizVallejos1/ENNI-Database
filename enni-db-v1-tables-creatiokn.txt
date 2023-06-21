@@ -165,3 +165,11 @@ CREATE TABLE `NOTIFICATION` (
   FOREIGN KEY (`profile_id_em`) REFERENCES `PROFILE`(`profile_id`),
   FOREIGN KEY (`profile_id_rec`) REFERENCES `PROFILE`(`profile_id`)
 );
+
+-- Tabla BLOCKED
+CREATE TABLE `BLOCKED` (
+  `profile_id_em` INT,
+  `profile_id_rec` INT,
+  FOREIGN KEY (`profile_id_em`) REFERENCES `PROFILE`(`profile_id`),
+  FOREIGN KEY (`profile_id_rec`) REFERENCES `PROFILE`(`profile_id`)
+);
