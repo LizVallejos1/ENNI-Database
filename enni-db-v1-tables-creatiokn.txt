@@ -1,0 +1,167 @@
+USE eni_db;
+-- Tabla USER
+CREATE TABLE `USER` (
+  `user_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `email` VARCHAR(255) UNIQUE,
+  `pass` VARCHAR(255),
+  `phone` VARCHAR(20),
+  `role` VARCHAR(255)
+);
+-- Tabla PROFILE
+CREATE TABLE `PROFILE` (
+  `profile_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `user_id` INT,
+  `nick_name` VARCHAR(255),
+  `about` VARCHAR(255),
+  `privacy` VARCHAR(255),
+  `img_path` VARCHAR(255),
+  `verified` INT,
+  FOREIGN KEY (`user_id`) REFERENCES `USER`(`user_id`)
+);
+
+-- Tabla ALBUM
+CREATE TABLE `ALBUM` (
+  `album_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `album_name` VARCHAR(255),
+  `profile_id` INT,
+  `description` VARCHAR(255),
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`)
+);
+-- Tabla COLLABORATORS
+CREATE TABLE `COLLABORATORS` (
+  `profile_id` INT,
+  `album_id` INT,
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`),
+  FOREIGN KEY (`album_id`) REFERENCES `ALBUM`(`album_id`)
+);
+-- Tabla COLLECTION
+CREATE TABLE `COLLECTION` (
+  `collection_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `profile_id` INT,
+  `collection_name` VARCHAR(255),
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`)
+);
+
+-- Tabla POST
+CREATE TABLE `POST` (
+  `post_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `album_id` INT,
+  `text` VARCHAR(255),
+  `data_search` VARCHAR(255),
+  `privacy` VARCHAR(255),
+  `type` VARCHAR(255),
+  `date` DATETIME,
+  FOREIGN KEY (`album_id`) REFERENCES `ALBUM`(`album_id`)
+);
+
+-- Tabla MEDIA
+CREATE TABLE `MEDIA` (
+  `media_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `post_id` INT,
+  `type` VARCHAR(255),
+  `url` VARCHAR(255),
+  `date` DATETIME,
+  FOREIGN KEY (`post_id`) REFERENCES `POST`(`post_id`)
+);
+
+
+
+-- Tabla TAGS
+CREATE TABLE `TAGS` (
+  `post_id` INT,
+  `profile_id` INT,
+  FOREIGN KEY (`post_id`) REFERENCES `POST`(`post_id`),
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`)
+);
+-- Tabla VIEWS
+CREATE TABLE `VIEWS` (
+  `post_id` INT,
+  `profile_id` INT,
+  `datetime` DATETIME,
+  FOREIGN KEY (`post_id`) REFERENCES `POST`(`post_id`),
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`)
+);
+-- Tabla SAVED
+CREATE TABLE `SAVED` (
+  `profile_id` INT,
+  `post_id` INT,
+  `collection_id` INT,
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`),
+  FOREIGN KEY (`post_id`) REFERENCES `POST`(`post_id`),
+  FOREIGN KEY (`collection_id`) REFERENCES `COLLECTION`(`collection_id`)
+);
+-- Tabla COMMENT
+CREATE TABLE `COMMENT` (
+  `comment_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `post_id` INT,
+  `comment_id_rec` INT,
+  `profile_id` INT,
+  `comment_text` VARCHAR(255),
+  `datetime` DATETIME,
+  FOREIGN KEY (`post_id`) REFERENCES `POST`(`post_id`),
+  FOREIGN KEY (`comment_id_rec`) REFERENCES `COMMENT`(`comment_id`),
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`)
+);
+
+-- Tabla REACTION
+CREATE TABLE `REACTION` (
+  `post_id` INT,
+  `profile_id` INT,
+  `comment_id` INT,
+  `type` VARCHAR(255),
+  FOREIGN KEY (`post_id`) REFERENCES `POST`(`post_id`),
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`),
+  FOREIGN KEY (`comment_id`) REFERENCES `COMMENT`(`comment_id`)
+);
+
+
+-- Tabla RATE_ME
+CREATE TABLE `RATE_ME` (
+  `rate_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `profile_id_em` INT,
+  `profile_id_rec` INT,
+  `datetime` DATETIME,
+  `description` VARCHAR(255),
+  `rate` FLOAT,
+  FOREIGN KEY (`profile_id_em`) REFERENCES `PROFILE`(`profile_id`),
+  FOREIGN KEY (`profile_id_rec`) REFERENCES `PROFILE`(`profile_id`)
+);
+
+-- Tabla FOLLOWING
+CREATE TABLE `FOLLOWING` (
+  `profile_id_em` INT,
+  `profile_id_rec` INT,
+  FOREIGN KEY (`profile_id_em`) REFERENCES `PROFILE`(`profile_id`),
+  FOREIGN KEY (`profile_id_rec`) REFERENCES `PROFILE`(`profile_id`)
+);
+
+-- Tabla SEARCHES
+CREATE TABLE `SEARCHES` (
+  `search_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `profile_id` INT,
+  `search_text` VARCHAR(255),
+  `datetime` DATETIME,
+  FOREIGN KEY (`profile_id`) REFERENCES `PROFILE`(`profile_id`)
+);
+-- Tabla SESSION
+CREATE TABLE `SESSION` (
+  `session_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `user_id` INT,
+  `ip` VARCHAR(255),
+  `status` ENUM('active', 'inactive'),
+  `datetime` DATETIME,
+  FOREIGN KEY (`user_id`) REFERENCES `USER`(`user_id`)
+);
+
+-- Tabla NOTIFICATION
+CREATE TABLE `NOTIFICATION` (
+  `notification_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `profile_id_em` INT,
+  `profile_id_rec` INT,
+  `actions` VARCHAR(255),
+  `type` VARCHAR(255),
+  `id` INT,
+  `datetime` DATETIME,
+  FOREIGN KEY (`profile_id_em`) REFERENCES `PROFILE`(`profile_id`),
+  FOREIGN KEY (`profile_id_rec`) REFERENCES `PROFILE`(`profile_id`)
+);
