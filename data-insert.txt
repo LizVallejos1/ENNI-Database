@@ -73,3 +73,27 @@ INSERT INTO `BLOCKED` (`profile_id_em`, `profile_id_rec`) VALUES
 (2, 1);
 
 */
+
+INSERT INTO `USER` (`email`, `pass`, `phone`, `role`) VALUES
+('usuario1@gmail.com', 'contraseña1', '1234567890', 'user'),
+('usuario2@gmail.com', 'contraseña2', '9876543210', 'user');
+('usuario3@gmail.com', 'contraseña3', '1234566789', 'admin');
+('usuario4@gmail.com', 'contraseña4', '4564512168', 'superadmin');
+('usuario5@gmail.com', 'contraseña5', '1234567898', 'admin');
+('usuario6@gmail.com', 'contraseña6', '1235498777', 'admin');
+
+
+INSERT INTO `PROFILE` (`user_id`, `nick_name`, `about`, `privacy`, `img_path`, `verified`) VALUES
+(1, 'Usuario1', 'Acerca de mí', 'público', 'ruta/imagen1.jpg', 1),
+(2, 'Usuario2', 'Soy un aficionado a la fotografía', 'privado', 'ruta/imagen2.jpg', 0);
+(3, 'Usuario3', 'Soy amante de los perros', 'privado', 'ruta/imagen3.jpg', 1),
+(4, 'Usuario4', ' ', 'ruta/imagen4.jpg', 1),
+(5, 'Usuario5', 'Me encanta la lectura', 'privado', 'ruta/imagen5.jpg', 0),
+(6, 'Usuario6', 'Amo los deportes', 'público', 'ruta/imagen6.jpg', 1),
+
+
+
+
+
+
+
