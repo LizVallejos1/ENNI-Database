@@ -77,7 +77,7 @@ INSERT INTO `BLOCKED` (`profile_id_em`, `profile_id_rec`) VALUES
 INSERT INTO `USER` (`email`, `pass`, `phone`, `role`) VALUES
 ('usuario1@gmail.com', 'contraseña1', '1234567890', 'user'),
 ('usuario2@gmail.com', 'contraseña2', '9876543210', 'user');
-('usuario3@gmail.com', 'contraseña3', '1234566789', 'admin');
+('usuario3@gmail.com', 'contraseña3', '1234566789', 'user');
 ('usuario4@gmail.com', 'contraseña4', '4564512168', 'superadmin');
 ('usuario5@gmail.com', 'contraseña5', '1234567898', 'admin');
 ('usuario6@gmail.com', 'contraseña6', '1235498777', 'admin');
@@ -91,6 +91,47 @@ INSERT INTO `PROFILE` (`user_id`, `nick_name`, `about`, `privacy`, `img_path`, `
 (5, 'Usuario5', 'Me encanta la lectura', 'privado', 'ruta/imagen5.jpg', 0),
 (6, 'Usuario6', 'Amo los deportes', 'público', 'ruta/imagen6.jpg', 1),
 
+-- album insert --necessary id_profile
+
+INSERT INTO `ALBUM` (`album_name`, `profile_id`, `description`) VALUES
+('profile', 	1, 'profile photos'),
+('biography', 	1, 'biography photos'),
+('stories', 	1, stories photos'),
+('cover', 	1, 'cover photos');
+
+INSERT INTO `ALBUM` (`album_name`, `profile_id`, `description`) VALUES
+('profile', 	2, 'profile photos'),
+('biography', 	2, 'biography photos'),
+('stories', 	2, stories photos'),
+('cover', 	2, 'cover photos');
+
+INSERT INTO `ALBUM` (`album_name`, `profile_id`, `description`) VALUES
+('profile', 	3, 'profile photos'),
+('biography', 	3, 'biography photos'),
+('stories', 	3, stories photos'),
+('cover', 	3, 'cover photos');
+
+INSERT INTO `ALBUM` (`album_name`, `profile_id`, `description`) VALUES
+('b party', 	1, 'birthday photos');
+
+--post
+--necessary id_album
+-- type: ordinary or tmp: tmp 24hrs
+INSERT INTO `POST` (`album_id`, `text`, `data_search`, `privacy`, `type`, `date`) VALUES
+(	2, 'post-a', 'post a date',  'public', 'ordinary', now()),
+(	2, 'post-b', 'post b date', 'public' ,'ordinary', now());
+
+INSERT INTO `POST` (`album_id`, `text`, `data_search`, `privacy`, `type`, `date`) VALUES
+(	6, 'post-c', 'post c date','public', 'ordinary', now());
+
+INSERT INTO `POST` (`album_id`, `text`, `data_search`, `privacy`, `type`, `date`) VALUES
+(	10, 'post-d', 'post d date', 'public', 'ordinary', now());
+
+INSERT INTO `POST` (`album_id`, `text`, `data_search`, `privacy`, `type`, `date`) VALUES
+(	10, 'post-e', 'post e date', 'public', 'ordinary', now());
+
+INSERT INTO `POST` (`album_id`, `text`, `data_search`, `privacy`, `type`, `date`) VALUES
+(	12, 'post-f', 'post f date', 'private', 'tmp', now());
 
 
 
