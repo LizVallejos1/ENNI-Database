@@ -80,10 +80,10 @@ In caché : user_id , email, role, nick_name, profile_id
 -- user (role: user = 2,admin = 1,superadmin = 0)
 INSERT INTO `USER` (`email`, `pass`, `phone`, `role`) VALUES
 ('user1@gmail.com', 'password-1', '1234567890', '2'),
-('user2@gmail.com', 'password-2', '9876543210', '2');
-('user3@gmail.com', 'password-3', '1234566789', '2');
-('user4@gmail.com', 'password-5', '1234567898', '1');
-('user5@gmail.com', 'password-6', '1235498777', '1');
+('user2@gmail.com', 'password-2', '9876543210', '2'),
+('user3@gmail.com', 'password-3', '1234566789', '2'),
+('user4@gmail.com', 'password-5', '1234567898', '1'),
+('user5@gmail.com', 'password-6', '1235498777', '1'),
 ('user6@gmail.com', 'password-4', '4564512168', '0');
 
 --select * from user;
