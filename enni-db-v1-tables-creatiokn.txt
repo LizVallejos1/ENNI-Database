@@ -173,3 +173,6 @@ CREATE TABLE `BLOCKED` (
   FOREIGN KEY (`profile_id_em`) REFERENCES `PROFILE`(`profile_id`),
   FOREIGN KEY (`profile_id_rec`) REFERENCES `PROFILE`(`profile_id`)
 );
+
+-- Agregar columna is_active a la tabla PROFILE
+ALTER TABLE PROFILE ADD COLUMN is_active BOOLEAN DEFAULT true;
