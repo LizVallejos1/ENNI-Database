@@ -12,15 +12,15 @@ INSERT INTO `USER` (`email`, `pass`, `phone`, `role`) VALUES
 ('user5@gmail.com', 'password-6', '1235498777', '1'),
 ('user6@gmail.com', 'password-4', '4564512168', '0');
 
---select * from user;
+-- select * from user;
 
 
 
---INSERT INTO `USER` (`email`, `pass`, `phone`, `role`) VALUES ('', '', '', '');
+-- INSERT INTO `USER` (`email`, `pass`, `phone`, `role`) VALUES ('', '', '', '');
 -- select id from 'user' where email = (get from caché)
 
 /*DEFAULT FOR PROFILE*/
---verified 1=yes, 0=no
+-- verified 1=yes, 0=no
 INSERT INTO `PROFILE` (user_id, nick_name, about, privacy, img_path, verified)
 SELECT user_id, 'nick-1', 'this is an about... 1', 'public', CONCAT('img/users/profile/', user_id, '.jpg'), 1
 FROM `USER` WHERE email = 'user1@gmail.com';
@@ -90,12 +90,12 @@ INSERT INTO `COLLABORATORS` (`profile_id`, `album_id`) VALUES
 (4, 22);
 
 /*DEFAULT FOR POST*/
---post
---necessary id_album
+-- post
+-- necessary id_album
 -- type: ordinary or tmp: tmp 24hrs
 -- privacy: public, private, followers
 -- typ
---get list of album id from a determinate user
+-- get list of album id from a determinate user
 INSERT INTO `POST` (`album_id`, `text`, `data_search`, `privacy`, `type`, `date`) VALUES
 (	(SELECT album_id FROM `ALBUM` WHERE profile_id = '1' and album_name = 'biography'),	'post a',	'data',	'public',	'ordinary',	now()),
 (	(SELECT album_id FROM `ALBUM` WHERE profile_id = '1' and album_name = 'biography'),	'post a',	'data',	'public',	'ordinary',	now());
@@ -113,7 +113,7 @@ INSERT INTO `POST` (`album_id`, `text`, `data_search`, `privacy`, `type`, `date`
 (	(SELECT album_id FROM `ALBUM` WHERE profile_id = '2' and album_name = 'party'),		'post e',	'data',	'public',	'ordinary',	now());
 
 
---select * from  post;
+-- select * from  post;
 /*DEFAULT FOR MEDIA*/
 INSERT INTO `MEDIA` (`post_id`, `type`, `url`, `date`) VALUES
 (1, 'img', 'media/img/imagen1.jpg', now()),
@@ -127,7 +127,7 @@ INSERT INTO `MEDIA` (`post_id`, `type`, `url`, `date`) VALUES
 
 
 /*DEFAULT FOR BLOCKED*/
---profile_id_em blocks profile_id_rec
+-- profile_id_em blocks profile_id_rec
 INSERT INTO `BLOCKED` (`profile_id_em`, `profile_id_rec`) VALUES
 (1, 2),
 (2, 3);
@@ -210,9 +210,9 @@ INSERT INTO `NOTIFICATION` (`profile_id_em`, `profile_id_rec`, `actions`, `type`
 (2, 3, 'Comentó en tu publicación', 'comment', 7, now()),
 (5, 1, 'Comentó en tu publicación', 'comment', 8, now());
 
---BUSCAR EL profile_id_rec, el id* de type* y luego de la tabla type* en este caso comment*
+-- BUSCAR EL profile_id_rec, el id* de type* y luego de la tabla type* en este caso comment*
 -- sacar el post_id, buscar ese post_id en la tabla post* sacar de post* la columna album_id*
---de la tabla album* buscar el album_id* que coincida y de ahì sacar el profile_id_rec*
+-- de la tabla album* buscar el album_id* que coincida y de ahì sacar el profile_id_rec*
 
 /*DEFAULT FOR REACTION*/
 
@@ -238,7 +238,7 @@ INSERT INTO `REACTION` (`post_id`, `profile_id`, `comment_id`, `type`) VALUES
 -- NOT NECESSARY NOW 
 
 /*DEFAULT FOR SAVED*/
---NOT NECESSARY NOW
+-- NOT NECESSARY NOW
 
 
 
