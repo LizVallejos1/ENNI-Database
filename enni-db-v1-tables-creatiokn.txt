@@ -177,3 +177,9 @@ CREATE TABLE `BLOCKED` (
 
 -- Agregar columna is_active a la tabla PROFILE
 ALTER TABLE PROFILE ADD COLUMN is_active BOOLEAN DEFAULT true;
+
+-- Agregar columna is_active a la tabla USER
+ALTER TABLE USER ADD COLUMN is_active BOOLEAN DEFAULT true;
+
+-- Agregar columna enable a la table post
+alter table post add column enabled boolean default true;
