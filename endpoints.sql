@@ -86,7 +86,7 @@ SELECT * FROM BLOCKED WHERE profile_id_em = 1;
 -- follow a profile
 INSERT INTO FOLLOWING (profile_id_em, profile_id_rec) VALUES (1, 2);
 -- unfollow a profile
-DELETE FROM FOLLOWING WHERE profile_id_em = 1;
+DELETE FROM FOLLOWING WHERE profile_id_rec = 2 and profile_id_em = 1;
 -- delete follower
 DELETE FROM FOLLOWING WHERE profile_id_em = 2 AND profile_id_rec = 1;
 -- get a list of my followers
@@ -208,8 +208,73 @@ DELETE FROM VIEWS WHERE post_id = 10 AND profile_id = 1;
 ------------------------------------------------------------------------------------------------
 
 -- NOTIFICATION, REACTION, COMMENT, RATE_ME, FOLLOWING, AND PROFILE TABLES USED
---
+-- profile_id_em = 1, profile_id_rec = 2, action=(any table)
 
--- history
--- get a list of my activity
---
+--create notification
+
+(2, 1, 'Comentó en tu publicación', 'comment', 1, now());
+--profile_id_em = 1, profile_id_rec = ?, post_id = 3, album_id _= 4
+--to comment
+
+declare @profile_id_rec int;
+select A.profile_id into @profile_id_rec
+from `POST` P
+inner join `ALBUM` A on P.album_id = A.album_id
+where A.album_id = 4;
+INSERT INTO `NOTIFICATION` (`profile_id_em`, `profile_id_rec`, `actions`, `type`, `id`, `datetime`) VALUES
+(1, @profile_id_rec, 'has commented on', 'post', 3, now());
+--select *  from post where post_id = 3;
+
+
+--to tag
+'has tagged you in'
+INSERT INTO TAGS (post_id, profile_id) VALUES (10, 2);
+INSERT INTO `NOTIFICATION` (`profile_id_em` , `profile_id_rec`, `actions`, `type`, `id`, `datetime`) VALUES
+(1, 2,'has rated you', 'post', 10, now());
+
+--to rate
+INSERT INTO RATE_ME (profile_id_em, profile_id_rec, datetime, description, rate)
+VALUES (1, 2, NOW(), 'Great photographer!', 9.5);
+INSERT INTO `NOTIFICATION` (`profile_id_em` , `profile_id_rec`, `actions`, `type`, `id`, `datetime`) VALUES
+(1, 2,'has rated you', 'profile', 1, now());
+
+
+--to colaborate
+INSERT INTO `COLLABORATORS` (profile_id, album_id) VALUES (2, 8);
+declare @profile_id_rec int;
+select profile_id into @profile_id_rec
+from `ALBUM` where album_id = @album_id;
+INSERT INTO `NOTIFICATION` (`profile_id_em` , `profile_id_rec`, `actions`, `type`, `id`, `datetime`) VALUES
+(2, @profile_id_rec,'wants you to collaborate in a new album', 'album', 8, now());
+
+
+--to follow
+'wants to follow you'
+INSERT INTO FOLLOWING (profile_id_em, profile_id_rec) VALUES 
+(1, 2);
+INSERT INTO `NOTIFICATION` (`profile_id_em`, `profile_id_rec`, `actions`, `type`, `id`, `datetime`) VALUES
+(1, 2, 'wants to follow you', 'profile', 1, now());
+
+
+--to react
+INSERT INTO `REACTION` (`post_id`, `profile_id`, `comment_id`, `type`) VALUES
+(1, 1, NULL, 'like');
+declare @profile_id_rec int;
+SELECT A.profile_id into @profile_id_rec 
+FROM REACTION R
+INNER JOIN POST P ON R.post_id = P.post_id
+INNER JOIN ALBUM A ON P.album_id = A.album_id
+WHERE R.post_id = 3;
+
+INSERT INTO `NOTIFICATION` (`profile_id_em`, `profile_id_rec`, `actions`, `type`, `id`, `datetime`) VALUES
+(1, @profile_id_rec, 'has reacted to', 'post', 3, now());
+--select *  from post where post_id = 3;
+
+--delete notification
+DELETE FROM NOTIFICATION WHERE notification_id = 12;
+--DELETE FROM TABLE_NAME WHERE column_name IN (value1, value2, value3);
+
+
+-- my activity
+select * from notification where profile_id_em = 1 order by datetime desc limit 10 offset 1;  
+--SELECT * FROM TABLE_NAME ORDER BY datetime_column DESC LIMIT 10 OFFSET 10;
