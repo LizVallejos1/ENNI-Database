@@ -10,10 +10,28 @@ actions a user can be able to do
 
 -- user endpoints and profile endpoits
 -- create user
+insert into user (email,pass,phone, role) values("userliz@gmail.com","passliz","681207975","1");
 -- update user data
--- delete user
--- list users
+update user
+set email = "yliz2@gmail.com", pass= "123liz", phone = "68120797", role= "2"
+	where user_id= 7;
 
+-- delete user
+
+-- Actualizar el estado del perfil a inactivo
+UPDATE USER SET is_active = false WHERE user_id = 7;
+-- Desvincular las relaciones en otras tablas
+update profile set user_id = null where user_id=6;
+-- insert into session (user_id,ip,status,datetime)values(3,"192.168.1.7","active",now());
+update session set user_id = null where user_id=3;
+-- considera el campo is_active, para obtener usuarios activos
+select * from user where is_active = true;
+-- consideramos datos relacionados de un usuario
+select *  from profile where user_id = 6;
+select * from session where user_id =3;
+
+-- list users by role
+select * from user where role =2;
 
 -- create a session
 insert into session (user_id,ip,status, datetime) values (2,"192.168.1.6","active", now());
@@ -180,26 +198,59 @@ DELETE FROM VIEWS WHERE post_id = 10 AND profile_id = 1;
 
 ------------------------------------------------------------------  
 
-
 -- POST ENDPOINTS
 -- POST TABLE USED AND PROFILE TABLE
 -- create a post(done)
+insert into post (album_id,text,data_search,privacy,type,date)values(22,"postliz","data","private","tmp",now());
+-- update a post
+update post
+set text ="postlizedit", data_search= "data",privacy="public", type="ordinary", date= now()
+	where post_id= 11;
+
 -- detele a post and its tags
--- ...
+-- Actualizar el estado del post a deshabilitado 1 -> 0 
+update post set enabled = false where post_id= 11;
+-- Desvincular las relaciones en otras tablas
+update media set post_id= null where post_id=1;
+update tags set post_id= null where post_id=1;
+update views set post_id= null where post_id=1;
+update saved set post_id= null where post_id=1;
+update comment set post_id= null where post_id=1;
+update reaction set post_id= null where post_id=1;
+-- considera el campo enabled, para obtener post habilitados
+select * from post where enabled = true;
+-- consideramos datos relacionados de un post
+select * from media where post_id=1;
+select * from tags where post_id=1;
+select * from views where post_id=1;
+select * from saved where post_id=1;
+select * from comment where post_id=1;
+select * from reaction where post_id=1;
 
 -- REACTION, POST, COMMENT AND PROFILE TABLES USED
 -- react a post or comment
+ insert into reaction(post_id,profile_id,comment_id,type)values(2,3,2,"like");
+ insert into comment(post_id,comment_id_rec,profile_id,comment_text,datetime)values(10,1,3,"bella",now());
 -- unreact a post
--- ...
+delete from reaction where post_id=2 and profile_id=3;
 
 -- COMMENT, POST AND PROFILE TABLES USED
 -- create a comment on a post
--- create a comment on a comment
+insert into comment(post_id,comment_id_rec,profile_id,comment_text,datetime)values(9,null,4,"bellisima",now());
+
+-- create a comment on a comment // not sure
+insert into comment(post_id,comment_id_rec,profile_id,comment_text,datetime)values(9,6,5,"bellisimax2",now());
+
 -- delete comment and its list of comments
+
 -- rewrite comment
+update comment set comment_text=" estas lindaji" , datetime= now() where comment_id=5;
 -- get list of post comments
+select * from comment where post_id=1;
+
 -- get list of comments of a comment
 
+select  comment_text from comment where comment_id_rec =1;
 
 -- MEDIA ...
 -- ...
