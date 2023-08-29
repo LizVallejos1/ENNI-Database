@@ -325,3 +325,4 @@ select * from notification where profile_id_em = 1 order by datetime desc limit 
 --para ver a quien le pertenece cada post
 SELECT P.post_id, P.album_id, A.profile_id AS profile_id_belongs_to FROM `POST` P INNER JOIN `ALBUM` A ON P.album_id = A.album_id;
 
+
